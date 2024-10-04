@@ -42,8 +42,8 @@ export interface ResponseTxSign extends ResponseHashSign {
 export type BigNumberish = string | number | BN;
 
 export type Call = {
-  to: string;
-  selector: string;
+  contractAddress: string;
+  entrypoint: string;
   calldata: string[];
 };
 

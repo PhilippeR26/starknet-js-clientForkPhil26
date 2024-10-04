@@ -85,6 +85,7 @@ export class StarknetClient {
     p2: number = 0x00,
     data: Uint8Array = new Uint8Array(0)
   ): Promise<ResponseGeneric> {
+    console.log({ins},{p1},{p2},"\n",data,"\n",data.subarray(100));
     return this.transport
       .send(CLA, ins, p1, p2, Buffer.from(data), [
         LedgerError.NoError,
@@ -343,10 +344,10 @@ export class StarknetClient {
 
       let data = new Uint8Array((2 + call.calldata.length) * 32);
       
-      const to = new BN(call.to.replace(/^0x*/, ""), 16);
+      const to = new BN(call.contractAddress.replace(/^0x*/, ""), 16);
       to.toArray("be", 32).forEach((byte, pos) => (data[pos] = byte));
 
-      const selector = new BN(call.selector.replace(/^0x*/, ""), 16);
+      const selector = new BN(call.entrypoint.replace(/^0x*/, ""), 16);
       selector.toArray("be", 32).forEach((byte, pos) => (data[32 + pos] = byte));
       
       call.calldata.forEach((s, idx) => {
@@ -452,10 +453,10 @@ export class StarknetClient {
 
       let data = new Uint8Array((2 + call.calldata.length) * 32);
       
-      const to = new BN(call.to.replace(/^0x*/, ""), 16);
+      const to = new BN(call.contractAddress.replace(/^0x*/, ""), 16);
       to.toArray("be", 32).forEach((byte, pos) => (data[pos] = byte));
 
-      const selector = new BN(call.selector.replace(/^0x*/, ""), 16);
+      const selector = new BN(call.entrypoint.replace(/^0x*/, ""), 16);
       selector.toArray("be", 32).forEach((byte, pos) => (data[32 + pos] = byte));
       
       call.calldata.forEach((s, idx) => {
